@@ -27,10 +27,10 @@ public class Provider implements Serializable {
     @JoinTable(name = "provider_product",
             joinColumns = @JoinColumn(name = "provider_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    List<Product> productListAll;
+    private List<Product> productListAll;
 
     @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL)
-    List<Product> productList;
+    private List<Product> productList;
 
     public  Provider(){
 

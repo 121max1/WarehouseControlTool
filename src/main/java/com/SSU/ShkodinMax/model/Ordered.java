@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class Ordered implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @Id

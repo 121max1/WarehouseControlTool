@@ -18,7 +18,7 @@ public class Type implements Serializable {
     private String description;
 
     @OneToMany(mappedBy = "type")
-    List<Product> productList;
+    private List<Product> productList;
 
     public Type(){
 

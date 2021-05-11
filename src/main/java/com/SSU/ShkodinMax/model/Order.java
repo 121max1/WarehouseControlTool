@@ -30,7 +30,7 @@ public class Order implements Serializable {
     private String address;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Ordered> ordered;
+    private List<Ordered> ordered;
 
     public Order() {
 

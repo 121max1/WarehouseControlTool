@@ -16,7 +16,7 @@ public class Staff extends Contacts {
 
 
     @OneToMany(mappedBy = "staff")
-    List<Order> orderList;
+    private List<Order> orderList;
 
     public Staff()
     {

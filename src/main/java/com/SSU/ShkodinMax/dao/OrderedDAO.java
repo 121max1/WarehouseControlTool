@@ -3,11 +3,11 @@ package com.SSU.ShkodinMax.dao;
 import com.SSU.ShkodinMax.model.Ordered;
 
 public interface OrderedDAO {
-    Ordered findById(int id);
+    Ordered findByIdProduct(int id) throws Exception;
 
-    void save(Ordered ordered);
+    void save(Ordered ordered) throws Exception;
 
-    void update(Ordered ordered);
+    void update(Ordered ordered) throws Exception;
 
-    void delete(Ordered ordered);
+    void delete(Ordered ordered) throws Exception;
 }
