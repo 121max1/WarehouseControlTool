@@ -1,7 +1,14 @@
 package com.SSU.ShkodinMax.services;
 
-import com.SSU.ShkodinMax.dao.impl.StaffDAOImpl;
+import com.SSU.ShkodinMax.model.Staff;
 
-public class StaffService {
-    StaffDAOImpl staffDAO = new StaffDAOImpl();
+public interface StaffService {
+    void addStaff(Staff staff) throws Exception;
+
+    void updateStaff(Staff staff) throws Exception;
+
+    void deleteStaff(Staff staff) throws Exception;
+
+    Staff getStaffById(int id) throws Exception;
+
 }

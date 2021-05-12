@@ -1,8 +1,16 @@
 package com.SSU.ShkodinMax.services;
+;
+import com.SSU.ShkodinMax.model.Client;
 
-import com.SSU.ShkodinMax.dao.impl.ClientDAOImpl;
+public interface ClientService {
+   void addClient(Client client) throws Exception;
 
-public class ClientService {
-    private ClientDAOImpl clientDAO = new ClientDAOImpl();
+   void updateClient(Client client) throws Exception;
+
+   void deleteClient(Client client) throws Exception;
+
+   Client getClientById(int id) throws Exception;
+
+
 
 }

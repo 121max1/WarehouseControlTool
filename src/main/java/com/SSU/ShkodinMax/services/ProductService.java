@@ -1,7 +1,14 @@
 package com.SSU.ShkodinMax.services;
 
-import com.SSU.ShkodinMax.dao.impl.ProductDAOImpl;
+import com.SSU.ShkodinMax.model.Product;
 
-public class ProductService {
-    ProductDAOImpl productDAO = new ProductDAOImpl();
+public interface ProductService {
+    void addProduct(Product product) throws Exception;
+
+    void updateProduct(Product product) throws Exception;
+
+    void deleteProduct(Product product) throws Exception;
+
+    Product getProductById(int id) throws Exception;
+
 }
