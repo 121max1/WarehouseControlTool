@@ -1,9 +1,11 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.dao.ClientDAO;
-import com.SSU.ShkodinMax.dao.impl.ClientDAOImpl;
+import com.SSU.ShkodinMax.repository.ClientDAO;
+import com.SSU.ShkodinMax.repository.impl.ClientDAOImpl;
 import com.SSU.ShkodinMax.model.Client;
 import com.SSU.ShkodinMax.services.ClientService;
+
+import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -14,7 +16,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void addClient(Client client) throws Exception {
+    public void addClient(Client client) {
         clientDAO.save(client);
     }
 
@@ -31,5 +33,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getClientById(int id) throws Exception {
         return  clientDAO.findById(id);
+    }
+
+    @Override
+    public List<Client> getAll() {
+        return clientDAO.getAll();
     }
 }

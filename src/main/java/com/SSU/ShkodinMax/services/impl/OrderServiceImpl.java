@@ -1,9 +1,11 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.dao.OrderDAO;
-import com.SSU.ShkodinMax.dao.impl.OrderDAOImpl;
+import com.SSU.ShkodinMax.repository.OrderDAO;
+import com.SSU.ShkodinMax.repository.impl.OrderDAOImpl;
 import com.SSU.ShkodinMax.model.Order;
 import com.SSU.ShkodinMax.services.OrderService;
+
+import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -32,5 +34,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderById(int id) throws Exception {
         return orderDAO.findById(id);
+    }
+
+    @Override
+    public List<Order> getAll() {
+        return orderDAO.getAll();
     }
 }

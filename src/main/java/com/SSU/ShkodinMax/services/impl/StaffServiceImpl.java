@@ -1,9 +1,11 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.dao.StaffDAO;
-import com.SSU.ShkodinMax.dao.impl.StaffDAOImpl;
+import com.SSU.ShkodinMax.repository.StaffDAO;
+import com.SSU.ShkodinMax.repository.impl.StaffDAOImpl;
 import com.SSU.ShkodinMax.model.Staff;
 import com.SSU.ShkodinMax.services.StaffService;
+
+import java.util.List;
 
 public class StaffServiceImpl implements StaffService {
 
@@ -32,5 +34,10 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Staff getStaffById(int id) throws Exception {
         return  staffDAO.findById(id);
+    }
+
+    @Override
+    public List<Staff> getAll() {
+        return staffDAO.getAll();
     }
 }

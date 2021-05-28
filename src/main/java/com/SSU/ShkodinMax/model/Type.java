@@ -17,7 +17,8 @@ public class Type implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
     private List<Product> productList;
 
     public Type(){

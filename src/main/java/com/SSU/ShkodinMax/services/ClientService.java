@@ -1,6 +1,9 @@
 package com.SSU.ShkodinMax.services;
 ;
 import com.SSU.ShkodinMax.model.Client;
+import com.SSU.ShkodinMax.model.Type;
+
+import java.util.List;
 
 public interface ClientService {
    void addClient(Client client) throws Exception;
@@ -11,6 +14,7 @@ public interface ClientService {
 
    Client getClientById(int id) throws Exception;
 
+   List<Client> getAll();
 
 
 }

@@ -1,9 +1,11 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.dao.ProductDAO;
-import com.SSU.ShkodinMax.dao.impl.ProductDAOImpl;
+import com.SSU.ShkodinMax.repository.ProductDAO;
+import com.SSU.ShkodinMax.repository.impl.ProductDAOImpl;
 import com.SSU.ShkodinMax.model.Product;
 import com.SSU.ShkodinMax.services.ProductService;
+
+import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -31,5 +33,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(int id) throws Exception {
         return productDAO.findById(id);
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return null;
     }
 }

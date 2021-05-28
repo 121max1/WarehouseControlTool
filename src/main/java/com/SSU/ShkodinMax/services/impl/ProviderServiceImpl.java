@@ -1,9 +1,11 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.dao.ProviderDAO;
-import com.SSU.ShkodinMax.dao.impl.ProviderDAOImpl;
+import com.SSU.ShkodinMax.repository.ProviderDAO;
+import com.SSU.ShkodinMax.repository.impl.ProviderDAOImpl;
 import com.SSU.ShkodinMax.model.Provider;
 import com.SSU.ShkodinMax.services.ProviderService;
+
+import java.util.List;
 
 public class ProviderServiceImpl implements ProviderService {
 
@@ -32,5 +34,10 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public Provider getProviderById(int id) throws Exception {
         return providerDAO.findById(id);
+    }
+
+    @Override
+    public List<Provider> getAll() {
+        return providerDAO.getAll();
     }
 }

@@ -1,6 +1,9 @@
 package com.SSU.ShkodinMax.services;
 
+import com.SSU.ShkodinMax.model.Client;
 import com.SSU.ShkodinMax.model.Provider;
+
+import java.util.List;
 
 public interface ProviderService {
     void addProvider(Provider provider) throws Exception;
@@ -11,4 +14,5 @@ public interface ProviderService {
 
     Provider getProviderById(int id) throws Exception;
 
+    List<Provider> getAll();
 }

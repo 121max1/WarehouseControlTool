@@ -1,7 +1,10 @@
 package com.SSU.ShkodinMax.services;
 
 
+import com.SSU.ShkodinMax.model.Client;
 import com.SSU.ShkodinMax.model.Ordered;
+
+import java.util.List;
 
 public interface OrderedService {
     void addOrdered(Ordered ordered) throws Exception;
@@ -12,4 +15,5 @@ public interface OrderedService {
 
     Ordered getOrderedById(int id) throws Exception;
 
+    List<Ordered> getAll();
 }
