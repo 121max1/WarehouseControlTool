@@ -4,6 +4,9 @@ import com.SSU.ShkodinMax.repository.UserDAO;
 import com.SSU.ShkodinMax.repository.impl.UserDAOImpl;
 import com.SSU.ShkodinMax.model.User;
 import com.SSU.ShkodinMax.services.UserService;
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
 
 public class UserServiceImpl implements UserService {
 
@@ -14,6 +17,10 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public void addUser(User user) throws Exception {
+         String hashed = Hashing.sha256()
+                .hashString(user.getPassword(), StandardCharsets.UTF_8)
+                .toString();
+         user.setPassword(hashed);
         userDAO.save(user);
     }
 
@@ -23,7 +30,9 @@ public class UserServiceImpl implements UserService {
         if (userToLogin == null) {
             return false;
         } else {
-            if (userToLogin.getPassword() == user.getPassword())
+            if (Hashing.sha256().
+                    hashString(user.getPassword(), StandardCharsets.UTF_8).
+                    toString().equals(user.getPassword()))
             {
                 return  true;
             }

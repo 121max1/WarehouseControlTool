@@ -12,12 +12,12 @@ import java.util.Scanner;
 
 public class ConsolePL {
     private static final ClientService clientService = new ClientServiceImpl();
-    private final OrderedService orderedService = new OrderedServiceImpl();
-    private final OrderService orderService = new OrderServiceImpl();
-    private final ProductService productService = new ProductServiceImpl();
-    private final ProviderService providerService = new ProviderServiceImpl();
-    private final StaffService staffService = new StaffServiceImpl();
-    private final TypeService typeService = new TypeServiceImpl();
+    private static final OrderedService orderedService = new OrderedServiceImpl();
+    private static final OrderService orderService = new OrderServiceImpl();
+    private static final ProductService productService = new ProductServiceImpl();
+    private static final ProviderService providerService = new ProviderServiceImpl();
+    private static final StaffService staffService = new StaffServiceImpl();
+    private static final TypeService typeService = new TypeServiceImpl();
     private static final UserService userService = new UserServiceImpl();
 
     private static int getChoice(int minValue, int maxValue)
@@ -45,7 +45,7 @@ public class ConsolePL {
         return choice;
     }
     private static void printLoginMenu(){
-        System.out.print("1. Sign in +\n" + "2. Sign up");
+        System.out.println("1. Sign in \n" + "2. Sign up");
     }
     private static void printMainMenu()
     {
@@ -81,7 +81,7 @@ public class ConsolePL {
         return clientToReturn;
     }
 
-    private static String[] getLoginAndPasswordToSignIn(){
+    private static String[] getLoginAndPasswordToSign(){
         Scanner sc = new Scanner(System.in);
         System.out.print("login:");
         String login = sc.nextLine();
@@ -91,19 +91,28 @@ public class ConsolePL {
     }
     public static void main(String[] args) throws Exception {
         boolean isExit = false;
-        System.out.println("Please sign in: ");
-        boolean isSignInSuccess = true;
-        //String[] loginAndPassword = getLoginAndPasswordToSignIn();
-        while (!isSignInSuccess) {
-            String[] loginAndPassword = getLoginAndPasswordToSignIn();
-            if(userService.checkUser(new User(loginAndPassword[0],loginAndPassword[1]))){
-                isSignInSuccess  = true;
-            }
-            else
-            {
-                System.out.println("Incorrect login or password, please try again");
-            }
+        printLoginMenu();
+        switch (getChoice(1,2)){
+            case 1:
+                System.out.println("Please sign in: ");
+                boolean isSignInSuccess = false;
+                while (!isSignInSuccess) {
+                    String[] loginAndPassword = getLoginAndPasswordToSign();
+                    if(userService.checkUser(new User(loginAndPassword[0],loginAndPassword[1]))){
+                        isSignInSuccess  = true;
+                    }
+                    else
+                    {
+                        System.out.println("Incorrect login or password, please try again");
+                    }
+                }
+                break;
+            case 2:
+                String[] loginAndPassword = getLoginAndPasswordToSign();
+                userService.addUser(new User(loginAndPassword[0],loginAndPassword[1]));
+                break;
         }
+
         while (!isExit) {
 
             printMainMenu();
@@ -114,35 +123,117 @@ public class ConsolePL {
                 case 1:
                     switch (choiceOperation){
                         case 1:
+                            ClientIOHelper.getALl(clientService);
                             break;
                         case 2:
                             ClientIOHelper.addClient(clientService);
                             break;
                         case 3:
+                            ClientIOHelper.updateClient(clientService);
                             break;
                         case 4:
+                            ClientIOHelper.deleteClient(clientService);
                             break;
                     }
-
                     break;
                 case 2:
-
+                    switch (choiceOperation){
+                        case 1:
+                            OrderIOHelper.getALl(orderService);
+                            break;
+                        case 2:
+                            OrderIOHelper.addOrder(orderService,clientService,staffService);
+                            break;
+                        case 3:
+                            OrderIOHelper.updateOrder(orderService,clientService,staffService);
+                            break;
+                        case 4:
+                            OrderIOHelper.deleteOrder(orderService);
+                            break;
+                    }
                     break;
                 case 3:
-
+                    switch (choiceOperation){
+                        case 1:
+                            OrderedIOHelper.getALl(orderedService);
+                            break;
+                        case 2:
+                            OrderedIOHelper.addOrdered(orderedService,orderService,productService);
+                            break;
+                        case 3:
+                            OrderedIOHelper.updateOrdered(orderedService);
+                            break;
+                        case 4:
+                            OrderedIOHelper.deleteOrdered(orderedService);
+                            break;
+                    }
                     break;
                 case 4:
-
+                    switch (choiceOperation){
+                        case 1:
+                            ProductIOHelper.getALl(productService);
+                            break;
+                        case 2:
+                            ProductIOHelper.addProduct(productService,typeService,providerService);
+                            break;
+                        case 3:
+                            ProductIOHelper.updateProduct(productService,typeService,providerService);
+                            break;
+                        case 4:
+                            ProductIOHelper.deleteProduct(productService);
+                            break;
+                    }
                     break;
                 case 5:
-
+                    switch (choiceOperation){
+                        case 1:
+                            ProviderIOHelper.getALl(providerService);
+                            break;
+                        case 2:
+                            ProviderIOHelper.addProvider(providerService);
+                            break;
+                        case 3:
+                            ProviderIOHelper.updateProvider(providerService);
+                            break;
+                        case 4:
+                            ProviderIOHelper.deleteProvider(providerService);
+                            break;
+                    }
                     break;
                 case 6:
-
+                    switch (choiceOperation){
+                        case 1:
+                            StaffIOHelper.getALl(staffService);
+                            break;
+                        case 2:
+                            StaffIOHelper.addStaff(staffService);
+                            break;
+                        case 3:
+                            StaffIOHelper.updateStaff(staffService);
+                            break;
+                        case 4:
+                            StaffIOHelper.deleteStaff(staffService);
+                            break;
+                    }
                     break;
+
                 case 7:
-
+                    switch (choiceOperation){
+                        case 1:
+                            TypeIOHelper.getALl(typeService);
+                            break;
+                        case 2:
+                            TypeIOHelper.addType(typeService);
+                            break;
+                        case 3:
+                            TypeIOHelper.updateType(typeService);
+                            break;
+                        case 4:
+                            TypeIOHelper.deleteType(typeService);
+                            break;
+                    }
                     break;
+
             }
        }
 
