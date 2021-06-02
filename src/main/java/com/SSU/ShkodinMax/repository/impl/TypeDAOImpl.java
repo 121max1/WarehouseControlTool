@@ -20,9 +20,12 @@ public class TypeDAOImpl implements TypeDAO {
     }
 
     @Override
-    public Type findById(int id){
+    public Type findById(int id) throws Exception {
         try (Session session = sessionFactory.openSession()) {
             Type type = session.get(Type.class, id);
+            if(type == null){
+                throw new Exception(String.format("Type with specified %s doesn't exist", id));
+            }
             return type;
 
         }

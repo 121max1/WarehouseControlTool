@@ -6,7 +6,7 @@ import com.SSU.ShkodinMax.model.Staff;
 import java.util.List;
 
 public interface StaffDAO {
-    Staff findById(int id);
+    Staff findById(int id) throws Exception;
 
     void save(Staff staff);
 

@@ -10,17 +10,17 @@ import java.util.Scanner;
 public class ProviderIOHelper {
     public static void addProvider(ProviderService providerService) {
         try {
-            Scanner sc = new Scanner(System.in);
             Provider providerToSave = new Provider();
             System.out.print("Enter Name:");
-            providerToSave.setName(sc.nextLine());
+            providerToSave.setName(ConsoleInputHelper.enterString());
             System.out.print("Enter Address:");
-            providerToSave.setAddress(sc.nextLine());
+            providerToSave.setAddress(ConsoleInputHelper.enterString());
             System.out.print("Enter Email:");
-            providerToSave.setEmail(sc.nextLine());
+            providerToSave.setEmail(ConsoleInputHelper.enterString());
             System.out.print("Enter Phone number:");
-            providerToSave.setTelephoneNumber(sc.nextLine());
+            providerToSave.setTelephoneNumber(ConsoleInputHelper.enterString());
             providerService.addProvider(providerToSave);
+            System.out.println("Success! Provider added");
         }catch (Exception e)
         {
             System.out.println("Something went wrong. Reason: " + e.getMessage());
@@ -30,25 +30,36 @@ public class ProviderIOHelper {
         try {
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter id:");
-            providerService.deleteProvider(providerService.getProviderById(sc.nextInt()));
+            int id = ConsoleInputHelper.enterPositiveIntValue();
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                providerService.deleteProvider(providerService.getProviderById(id));
+                System.out.println("Success! Provider deleted");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
     }
     public  static void updateProvider(ProviderService providerService){
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter provider's id:");
-            Provider provider = providerService.getProviderById(sc.nextInt());
+            Provider provider = providerService.getProviderById(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter Name:");
-            provider.setName(sc.nextLine());
+            provider.setName(ConsoleInputHelper.enterString());
             System.out.print("Enter Address:");
-            provider.setAddress(sc.nextLine());
+            provider.setAddress(ConsoleInputHelper.enterString());
             System.out.print("Enter Email:");
-            provider.setEmail(sc.nextLine());
+            provider.setEmail(ConsoleInputHelper.enterString());
             System.out.print("Enter Phone number:");
-            provider.setTelephoneNumber(sc.nextLine());
-            providerService.updateProvider(provider);
+            provider.setTelephoneNumber(ConsoleInputHelper.enterString());
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                providerService.updateProvider(provider);
+                System.out.println("Success! Provider updated");
+            }else{
+                System.out.println("Operation canceled");
+            }
+
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }

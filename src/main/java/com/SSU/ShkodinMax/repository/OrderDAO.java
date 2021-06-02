@@ -5,7 +5,7 @@ import com.SSU.ShkodinMax.model.Order;
 import java.util.List;
 
 public interface OrderDAO {
-    Order findById(int id) ;
+    Order findById(int id) throws Exception;
 
     void save(Order order);
 

@@ -20,10 +20,13 @@ public class OrderedDAOImpl implements OrderedDAO {
     }
 
     @Override
-    public Ordered findById (int id){
+    public Ordered findById (int id) throws Exception {
         Ordered ordered = null;
         try (Session session = sessionFactory.openSession()) {
             ordered = session.get(Ordered.class, id);
+            if(ordered == null){
+                throw new Exception(String.format("Ordered with specified %s doesn't exist", id));
+            }
             return ordered;
 
         }

@@ -20,10 +20,13 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(int id) throws Exception {
         Product product = null;
         try (Session session = sessionFactory.openSession()) {
             product = session.get(Product.class, id);
+            if(product == null){
+                throw new Exception(String.format("Product with specified %s doesn't exist", id));
+            }
             return product;
 
         }

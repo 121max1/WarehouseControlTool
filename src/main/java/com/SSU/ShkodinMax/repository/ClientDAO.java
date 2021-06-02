@@ -5,7 +5,7 @@ import com.SSU.ShkodinMax.model.Client;
 import java.util.List;
 
 public interface ClientDAO {
-    Client findById(int id);
+    Client findById(int id) throws Exception;
 
     void save(Client client);
 

@@ -7,29 +7,28 @@ import com.SSU.ShkodinMax.model.Product;
 import com.SSU.ShkodinMax.services.OrderService;
 import com.SSU.ShkodinMax.services.OrderedService;
 import com.SSU.ShkodinMax.services.ProductService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Scanner;
+import java.math.BigDecimal;
 
 public class OrderedIOHelper {
     public static void addOrdered(OrderedService orderedService,
                            OrderService orderService,
                            ProductService productService){
         try {
-            Scanner sc = new Scanner(System.in);
             Ordered orderedToSave = new Ordered();
             System.out.print("Enter order's id:");
-            Order order = orderService.getOrderById(sc.nextInt());
+            Order order = orderService.getOrderById(ConsoleInputHelper.enterPositiveIntValue());
             orderedToSave.setOrder(order);
             System.out.print("Enter product's id:");
-            Product product = productService.getProductById(sc.nextInt());
+            Product product = productService.getProductById(ConsoleInputHelper.enterPositiveIntValue());
             orderedToSave.setProduct(product);
             System.out.print("Enter amount:");
-            orderedToSave.setAmount(sc.nextInt());
+            orderedToSave.setAmount(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter price:");
-            orderedToSave.setPrice(sc.nextBigDecimal());
+            orderedToSave.setPrice(BigDecimal.valueOf(ConsoleInputHelper.enterPositiveIntValue()));
             orderedService.addOrdered(orderedToSave);
+            System.out.println("Success! Ordered added");
         }catch (Exception e)
         {
             System.out.println("Something went wrong. Reason: " + e.getMessage());
@@ -37,9 +36,15 @@ public class OrderedIOHelper {
     }
     public static void deleteOrdered(OrderedService orderedService){
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter id:");
-            orderedService.deleteOrdered(orderedService.getOrderedById(sc.nextInt()));
+            int id = ConsoleInputHelper.enterPositiveIntValue();
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                orderedService.deleteOrdered(orderedService.getOrderedById(id));
+                System.out.println("Success! Ordered deleted");
+            }else{
+                System.out.println("Operation canceled");
+            }
+
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
@@ -47,13 +52,17 @@ public class OrderedIOHelper {
 
     public  static void updateOrdered(OrderedService orderedService){
         try {
-            Scanner sc = new Scanner(System.in);
-            Ordered ordered = orderedService.getOrderedById(sc.nextInt());
+            Ordered ordered = orderedService.getOrderedById(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter amount:");
-            ordered.setAmount(sc.nextInt());
+            ordered.setAmount(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter price:");
-            ordered.setPrice(sc.nextBigDecimal());
-            orderedService.updateOrdered(ordered);
+            ordered.setPrice(BigDecimal.valueOf(ConsoleInputHelper.enterPositiveIntValue()));
+            if(ConsoleInputHelper.getConfirmationMessageResult()) {
+                orderedService.updateOrdered(ordered);
+                System.out.println("Success! Ordered updated");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }

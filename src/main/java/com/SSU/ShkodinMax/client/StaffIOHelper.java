@@ -16,26 +16,22 @@ public class StaffIOHelper {
 
     public static void addStaff(StaffService staffService) {
         try {
-            Scanner sc = new Scanner(System.in);
             Staff staffToSave = new Staff();
             System.out.print("Enter fullname: ");
-            staffToSave.setFullName(sc.nextLine());
+            staffToSave.setFullName(ConsoleInputHelper.enterString());
             System.out.print("Enter address: ");
-            staffToSave.setAddress(sc.nextLine());
+            staffToSave.setAddress(ConsoleInputHelper.enterString());
             System.out.print("Enter email: ");
-            staffToSave.setEmail(sc.nextLine());
+            staffToSave.setEmail(ConsoleInputHelper.enterString());
             System.out.print("Enter phone number: ");
-            staffToSave.setPhoneNumber(sc.nextLine());
-            System.out.print("Enter shipping date in format dd.mm.yyyy: ");
-            String[] birthdayDateStr = sc.nextLine().split(" ");
-            GregorianCalendar birthday = new GregorianCalendar(
-                    Integer.parseInt(birthdayDateStr[2]),
-                    Integer.parseInt(birthdayDateStr[1]),
-                    Integer.parseInt(birthdayDateStr[0]));
+            staffToSave.setPhoneNumber(ConsoleInputHelper.enterString());
+            System.out.print("Enter birthday in format dd.mm.yyyy: ");
+            GregorianCalendar birthday = ConsoleInputHelper.enterDate();
             staffToSave.setBirthday(birthday);
             System.out.print("Enter position: ");
-            staffToSave.setPosition(sc.nextLine());
+            staffToSave.setPosition(ConsoleInputHelper.enterString());
             staffService.addStaff(staffToSave);
+            System.out.println("Success! Staff added");
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
@@ -43,10 +39,15 @@ public class StaffIOHelper {
 
     public static void deleteStaff(StaffService staffService) {
         try {
-
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter id:");
-            staffService.deleteStaff(staffService.getStaffById(sc.nextInt()));
+            int id = ConsoleInputHelper.enterPositiveIntValue();
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                staffService.deleteStaff(staffService.getStaffById(id));
+                System.out.println("Success! Staff deleted");
+            }else{
+                System.out.println("Operation canceled");
+            }
+
         }catch (Exception e) {
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
@@ -54,27 +55,27 @@ public class StaffIOHelper {
 
     public  static void updateStaff(StaffService staffService) {
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter staff's id:");
-            Staff staffToUpdate = staffService.getStaffById(sc.nextInt());
+            Staff staffToUpdate = staffService.getStaffById(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter fullname: ");
-            staffToUpdate.setFullName(sc.nextLine());
+            staffToUpdate.setFullName(ConsoleInputHelper.enterString());
             System.out.print("Enter address: ");
-            staffToUpdate.setAddress(sc.nextLine());
+            staffToUpdate.setAddress(ConsoleInputHelper.enterString());
             System.out.print("Enter email: ");
-            staffToUpdate.setEmail(sc.nextLine());
+            staffToUpdate.setEmail(ConsoleInputHelper.enterString());
             System.out.print("Enter phone number: ");
-            staffToUpdate.setPhoneNumber(sc.nextLine());
+            staffToUpdate.setPhoneNumber(ConsoleInputHelper.enterString());
             System.out.print("Enter shipping date in format dd.mm.yyyy: ");
-            String[] birthdayDateStr = sc.nextLine().split(" ");
-            GregorianCalendar birthday = new GregorianCalendar(
-                    Integer.parseInt(birthdayDateStr[2]),
-                    Integer.parseInt(birthdayDateStr[1]),
-                    Integer.parseInt(birthdayDateStr[0]));
+            GregorianCalendar birthday = ConsoleInputHelper.enterDate();
             staffToUpdate.setBirthday(birthday);
             System.out.print("Enter position: ");
-            staffToUpdate.setPosition(sc.nextLine());
-            staffService.updateStaff(staffToUpdate);
+            staffToUpdate.setPosition(ConsoleInputHelper.enterString());
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                staffService.updateStaff(staffToUpdate);
+                System.out.println("Success! Staff updated");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }

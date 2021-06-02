@@ -20,10 +20,13 @@ public class ProviderDAOImpl implements ProviderDAO {
     }
 
     @Override
-    public Provider findById(int id) {
+    public Provider findById(int id) throws Exception {
         Provider provider = null;
         try (Session session = sessionFactory.openSession()) {
             provider = session.get(Provider.class, id);
+            if(provider == null){
+                throw new Exception(String.format("Provider with specified %s doesn't exist", id));
+            }
             return provider;
 
         }

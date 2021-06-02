@@ -21,10 +21,13 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order findById(int id) {
+    public Order findById(int id) throws Exception {
         Order order = null;
         try (Session session = sessionFactory.openSession()) {
             order = session.get(Order.class, id);
+            if(order == null){
+                throw new Exception(String.format("Order with specified %s doesn't exist", id));
+            }
             return order;
         }
     }

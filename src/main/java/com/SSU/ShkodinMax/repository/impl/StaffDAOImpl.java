@@ -20,9 +20,12 @@ public class StaffDAOImpl implements StaffDAO {
     }
 
     @Override
-    public Staff findById(int id) {
+    public Staff findById(int id) throws Exception {
         try (Session session = sessionFactory.openSession()) {
             Staff staff = session.get(Staff.class, id);
+            if(staff == null){
+                throw new Exception(String.format("Staff with specified %s doesn't exist", id));
+            }
             return staff;
 
         }

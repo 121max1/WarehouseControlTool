@@ -29,7 +29,7 @@ public class Provider implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> productListAll;
 
-    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> productList;
 
     public  Provider(){

@@ -1,5 +1,8 @@
 package com.SSU.ShkodinMax.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -14,8 +17,8 @@ public class Staff extends Contacts {
     @Column(name = "birthday")
     private GregorianCalendar birthday;
 
-
-    @OneToMany(mappedBy = "staff")
+    @JsonIgnore
+    @OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
     private List<Order> orderList;
 
     public Staff()

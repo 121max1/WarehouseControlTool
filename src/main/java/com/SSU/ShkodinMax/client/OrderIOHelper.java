@@ -4,52 +4,46 @@ import com.SSU.ShkodinMax.model.*;
 import com.SSU.ShkodinMax.services.ClientService;
 import com.SSU.ShkodinMax.services.OrderService;
 import com.SSU.ShkodinMax.services.StaffService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 public class OrderIOHelper {
     public static void addOrder(OrderService orderService,
                                  ClientService clientService,
                                  StaffService staffService) {
         try {
-            Scanner sc = new Scanner(System.in);
-
             Order orderToSave = new Order();
             System.out.print("Enter Address:");
-            orderToSave.setAddress(sc.nextLine());
+            orderToSave.setAddress(ConsoleInputHelper.enterString());
             System.out.print("Enter payment date in format dd.mm.yyyy:");
-            String[] paymentDateStr = sc.nextLine().split(" ");
-            GregorianCalendar paymentDate = new GregorianCalendar(
-                    Integer.parseInt(paymentDateStr[2]),
-                    Integer.parseInt(paymentDateStr[1]),
-                    Integer.parseInt(paymentDateStr[0]));
+            GregorianCalendar paymentDate = ConsoleInputHelper.enterDate();
             orderToSave.setPaymentDate(paymentDate);
             System.out.print("Enter shipping date in format dd.mm.yyyy:");
-            String[] shippingDateStr = sc.nextLine().split(" ");
-            GregorianCalendar shippingDate = new GregorianCalendar(
-                    Integer.parseInt(shippingDateStr[2]),
-                    Integer.parseInt(shippingDateStr[1]),
-                    Integer.parseInt(shippingDateStr[0]));
+            GregorianCalendar shippingDate = ConsoleInputHelper.enterDate();
             orderToSave.setShippingDate(shippingDate);
             System.out.print("Enter client's id:");
-            Client client = clientService.getClientById(sc.nextInt());
+            Client client = clientService.getClientById(ConsoleInputHelper.enterPositiveIntValue());
             orderToSave.setClient(client);
             System.out.print("Enter staff's id:");
-            Staff staff = staffService.getStaffById(sc.nextInt());
+            Staff staff = staffService.getStaffById(ConsoleInputHelper.enterPositiveIntValue());
             orderToSave.setStaff(staff);
             orderService.addOrder(orderToSave);
+            System.out.println("Success! Order added");
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
     }
     public static void deleteOrder(OrderService orderService){
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter id:");
-            orderService.deleteOrder(orderService.getOrderById(sc.nextInt()));
+            int id = ConsoleInputHelper.enterPositiveIntValue();
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                orderService.deleteOrder(orderService.getOrderById(id));
+                System.out.println("Success! Order added");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
@@ -58,32 +52,28 @@ public class OrderIOHelper {
                                    ClientService clientService,
                                    StaffService staffService){
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter order's id:");
-            Order orderToUpdate = orderService.getOrderById(sc.nextInt());
+            Order orderToUpdate = orderService.getOrderById(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter address:");
-            orderToUpdate.setAddress(sc.nextLine());
+            orderToUpdate.setAddress(ConsoleInputHelper.enterString());
             System.out.print("Enter payment date in format dd.mm.yyyy:");
-            String[] paymentDateStr = sc.nextLine().split(" ");
-            GregorianCalendar paymentDate = new GregorianCalendar(
-                    Integer.parseInt(paymentDateStr[2]),
-                    Integer.parseInt(paymentDateStr[1]),
-                    Integer.parseInt(paymentDateStr[0]));
+            GregorianCalendar paymentDate = ConsoleInputHelper.enterDate();
             orderToUpdate.setPaymentDate(paymentDate);
             System.out.print("Enter shipping date in format dd.mm.yyyy:");
-            String[] shippingDateStr = sc.nextLine().split(" ");
-            GregorianCalendar shippingDate = new GregorianCalendar(
-                    Integer.parseInt(shippingDateStr[2]),
-                    Integer.parseInt(shippingDateStr[1]),
-                    Integer.parseInt(shippingDateStr[0]));
+            GregorianCalendar shippingDate = ConsoleInputHelper.enterDate();
             orderToUpdate.setShippingDate(shippingDate);
             System.out.print("Enter client's id:");
-            Client client = clientService.getClientById(sc.nextInt());
+            Client client = clientService.getClientById(ConsoleInputHelper.enterPositiveIntValue());
             orderToUpdate.setClient(client);
             System.out.print("Enter staff's id:");
-            Staff staff = staffService.getStaffById(sc.nextInt());
+            Staff staff = staffService.getStaffById(ConsoleInputHelper.enterPositiveIntValue());
             orderToUpdate.setStaff(staff);
-            orderService.updateOrder(orderToUpdate);
+            if(ConsoleInputHelper.getConfirmationMessageResult()) {
+                orderService.updateOrder(orderToUpdate);
+                System.out.println("Success! Order updated");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }
         catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());

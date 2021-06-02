@@ -5,7 +5,7 @@ import com.SSU.ShkodinMax.model.Ordered;
 import java.util.List;
 
 public interface OrderedDAO {
-    Ordered findById(int id);
+    Ordered findById(int id) throws Exception;
 
     void save(Ordered ordered);
 

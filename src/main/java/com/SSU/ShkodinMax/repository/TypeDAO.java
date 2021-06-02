@@ -6,7 +6,7 @@ import com.SSU.ShkodinMax.model.Type;
 import java.util.List;
 
 public interface TypeDAO {
-    Type findById(int id);
+    Type findById(int id) throws Exception;
 
     void save(Type type);
 

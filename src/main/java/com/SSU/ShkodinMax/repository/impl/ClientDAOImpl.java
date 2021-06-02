@@ -20,10 +20,13 @@ public class ClientDAOImpl  implements ClientDAO {
         sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
     @Override
-    public Client findById(int id){
+    public Client findById(int id) throws Exception {
         Client client = null;
         try (Session session = sessionFactory.openSession()) {
             client = session.get(Client.class, id);
+            if (client == null){
+                throw new Exception(String.format("Client with specified %s doesn't exist", id));
+            }
             return client;
         }
     }

@@ -5,30 +5,29 @@ import com.SSU.ShkodinMax.services.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ProductIOHelper {
     public static void addProduct(ProductService productService,
                            TypeService typeService,
-                           ProviderService providerService) throws Exception {
+                           ProviderService providerService) {
         try {
-
-
-            Scanner sc = new Scanner(System.in);
             Product product = new Product();
             System.out.print("Enter product's name:");
-            product.setName(sc.nextLine());
+            product.setName(ConsoleInputHelper.enterString());
             System.out.print("Enter price:");
-            product.setPrice(sc.nextBigDecimal());
+            product.setPrice(BigDecimal.valueOf(ConsoleInputHelper.enterPositiveIntValue()));
             System.out.print("Enter unit:");
-            product.setUnit(sc.nextLine());
+            product.setUnit(ConsoleInputHelper.enterString());
             System.out.print("Enter provider's id:");
-            Provider provider = providerService.getProviderById(sc.nextInt());
+            Provider provider = providerService.getProviderById(ConsoleInputHelper.enterPositiveIntValue());
             product.setProvider(provider);
             System.out.print("Enter type's id:");
-            Type type = typeService.getTypeById(sc.nextInt());
+            Type type = typeService.getTypeById(ConsoleInputHelper.enterPositiveIntValue());
             product.setType(type);
             productService.addProduct(product);
+            System.out.println("Success! Product added");
         }catch (Exception e) {
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
@@ -36,11 +35,14 @@ public class ProductIOHelper {
 
     public static void deleteProduct(ProductService productService){
         try {
-
-
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter id:");
-            productService.deleteProduct(productService.getProductById(sc.nextInt()));
+            int id = ConsoleInputHelper.enterPositiveIntValue();
+            if(ConsoleInputHelper.getConfirmationMessageResult()) {
+                productService.deleteProduct(productService.getProductById(id));
+                System.out.println("Success! Product deleted");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
@@ -50,22 +52,26 @@ public class ProductIOHelper {
                            TypeService typeService,
                            ProviderService providerService){
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.print("Enter products's id:");
-            Product product = productService.getProductById(sc.nextInt());
+            Product product = productService.getProductById(ConsoleInputHelper.enterPositiveIntValue());
             System.out.print("Enter product's name:");
-            product.setName(sc.nextLine());
+            product.setName(ConsoleInputHelper.enterString());
             System.out.print("Enter price:");
-            product.setPrice(sc.nextBigDecimal());
+            product.setPrice(BigDecimal.valueOf(ConsoleInputHelper.enterPositiveIntValue()));
             System.out.print("Enter unit:");
-            product.setUnit(sc.nextLine());
+            product.setUnit(ConsoleInputHelper.enterString());
             System.out.print("Enter provider's id:");
-            Provider provider = providerService.getProviderById(sc.nextInt());
+            Provider provider = providerService.getProviderById(ConsoleInputHelper.enterPositiveIntValue());
             product.setProvider(provider);
             System.out.print("Enter type's id:");
-            Type type = typeService.getTypeById(sc.nextInt());
+            Type type = typeService.getTypeById(ConsoleInputHelper.enterPositiveIntValue());
             product.setType(type);
-            productService.addProduct(product);
+            if(ConsoleInputHelper.getConfirmationMessageResult()){
+                productService.updateProduct(product);
+                System.out.println("Success! Product updated");
+            }else{
+                System.out.println("Operation canceled");
+            }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
