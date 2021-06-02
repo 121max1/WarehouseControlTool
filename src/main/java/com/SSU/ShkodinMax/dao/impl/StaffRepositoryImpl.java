@@ -1,7 +1,7 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.ProductDAO;
-import com.SSU.ShkodinMax.model.Product;
+import com.SSU.ShkodinMax.dao.StaffRepository;
+import com.SSU.ShkodinMax.model.Staff;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,61 +12,60 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class ProductDAOImpl implements ProductDAO {
+public class StaffRepositoryImpl implements StaffRepository {
     private  SessionFactory sessionFactory;
 
-    public ProductDAOImpl(){
+    public StaffRepositoryImpl() {
         this.sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
 
     @Override
-    public Product findById(int id) throws Exception {
-        Product product = null;
+    public Staff findById(int id) throws Exception {
         try (Session session = sessionFactory.openSession()) {
-            product = session.get(Product.class, id);
-            if(product == null){
-                throw new Exception(String.format("Product with specified %s doesn't exist", id));
+            Staff staff = session.get(Staff.class, id);
+            if(staff == null){
+                throw new Exception(String.format("Staff with specified %s doesn't exist", id));
             }
-            return product;
+            return staff;
 
         }
     }
 
     @Override
-    public void save(Product product){
+    public void save(Staff staff){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(product);
+            session.save(staff);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void update(Product product){
+    public void update(Staff staff) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(product);
+            session.update(staff);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void delete(Product product){
+    public void delete(Staff staff){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(product);
+            session.delete(staff);
             session.getTransaction().commit();
         }
     }
     @Override
-    public List<Product> getAll() {
+    public List<Staff> getAll() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-            Root<Product> rootEntry = cq.from(Product.class);
-            CriteriaQuery<Product> all = cq.select(rootEntry);
+            CriteriaQuery<Staff> cq = cb.createQuery(Staff.class);
+            Root<Staff> rootEntry = cq.from(Staff.class);
+            CriteriaQuery<Staff> all = cq.select(rootEntry);
 
-            TypedQuery<Product> allQuery = session.createQuery(all);
+            TypedQuery<Staff> allQuery = session.createQuery(all);
             return allQuery.getResultList();
 
         }

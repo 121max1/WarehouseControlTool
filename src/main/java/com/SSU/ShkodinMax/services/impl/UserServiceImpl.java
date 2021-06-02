@@ -1,7 +1,7 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.repository.UserDAO;
-import com.SSU.ShkodinMax.repository.impl.UserDAOImpl;
+import com.SSU.ShkodinMax.dao.UserRepository;
+import com.SSU.ShkodinMax.dao.impl.UserRepositoryImpl;
 import com.SSU.ShkodinMax.model.User;
 import com.SSU.ShkodinMax.services.UserService;
 import com.google.common.hash.Hashing;
@@ -10,23 +10,23 @@ import java.nio.charset.StandardCharsets;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
     public UserServiceImpl(){
-        userDAO = new UserDAOImpl();
+        userRepository = new UserRepositoryImpl();
     }
     @Override
-    public void addUser(User user) throws Exception {
+    public void addUser(User user){
          String hashed = Hashing.sha256()
                 .hashString(user.getPassword(), StandardCharsets.UTF_8)
                 .toString();
          user.setPassword(hashed);
-        userDAO.save(user);
+        userRepository.save(user);
     }
 
     @Override
-    public boolean checkUser(User user) throws Exception {
-        User userToLogin = userDAO.findByLogin(user.getLogin());
+    public boolean checkUser(User user){
+        User userToLogin = userRepository.findByLogin(user.getLogin());
         if (userToLogin == null) {
             return false;
         } else {

@@ -1,8 +1,8 @@
-package com.SSU.ShkodinMax.repository;
+package com.SSU.ShkodinMax.dao;
 
 import com.SSU.ShkodinMax.model.User;
 
-public interface UserDAO {
+public interface UserRepository {
 
     void save(User user);
 

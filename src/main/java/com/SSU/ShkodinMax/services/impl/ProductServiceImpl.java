@@ -1,7 +1,7 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.repository.ProductDAO;
-import com.SSU.ShkodinMax.repository.impl.ProductDAOImpl;
+import com.SSU.ShkodinMax.dao.ProductRepository;
+import com.SSU.ShkodinMax.dao.impl.ProductRepositoryImpl;
 import com.SSU.ShkodinMax.model.Product;
 import com.SSU.ShkodinMax.services.ProductService;
 
@@ -9,30 +9,30 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
-    private ProductDAO productDAO;
+    private ProductRepository productRepository;
 
     public ProductServiceImpl(){
-        productDAO = new ProductDAOImpl();
+        productRepository = new ProductRepositoryImpl();
     }
 
     @Override
     public void addProduct(Product product) throws Exception {
-        productDAO.save(product);
+        productRepository.save(product);
     }
 
     @Override
     public void updateProduct(Product product) throws Exception {
-        productDAO.update(product);
+        productRepository.update(product);
     }
 
     @Override
     public void deleteProduct(Product product) throws Exception {
-        productDAO.delete(product);
+        productRepository.delete(product);
     }
 
     @Override
     public Product getProductById(int id) throws Exception {
-        return productDAO.findById(id);
+        return productRepository.findById(id);
     }
 
     @Override

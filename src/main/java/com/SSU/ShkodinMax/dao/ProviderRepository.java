@@ -1,11 +1,10 @@
-package com.SSU.ShkodinMax.repository;
+package com.SSU.ShkodinMax.dao;
 
-import com.SSU.ShkodinMax.model.Product;
 import com.SSU.ShkodinMax.model.Provider;
 
 import java.util.List;
 
-public interface ProviderDAO {
+public interface ProviderRepository {
     Provider findById(int id) throws Exception;
 
     void save(Provider provider);

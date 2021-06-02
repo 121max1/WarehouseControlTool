@@ -1,10 +1,10 @@
-package com.SSU.ShkodinMax.repository;
+package com.SSU.ShkodinMax.dao;
 
 import com.SSU.ShkodinMax.model.Order;
 
 import java.util.List;
 
-public interface OrderDAO {
+public interface OrderRepository {
     Order findById(int id) throws Exception;
 
     void save(Order order);

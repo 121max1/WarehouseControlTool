@@ -1,7 +1,7 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.repository.OrderedDAO;
-import com.SSU.ShkodinMax.repository.impl.OrderedDAOImpl;
+import com.SSU.ShkodinMax.dao.OrderedRepository;
+import com.SSU.ShkodinMax.dao.impl.OrderedRepositoryImpl;
 import com.SSU.ShkodinMax.model.Ordered;
 import com.SSU.ShkodinMax.services.OrderedService;
 
@@ -9,34 +9,34 @@ import java.util.List;
 
 public class OrderedServiceImpl implements OrderedService {
 
-    private OrderedDAO orderedDAO;
+    private OrderedRepository orderedRepository;
 
     public OrderedServiceImpl(){
-        orderedDAO = new OrderedDAOImpl();
+        orderedRepository = new OrderedRepositoryImpl();
     }
 
     @Override
     public void addOrdered(Ordered ordered) throws Exception {
-        orderedDAO.save(ordered);
+        orderedRepository.save(ordered);
     }
 
     @Override
     public void updateOrdered(Ordered ordered) throws Exception {
-        orderedDAO.update(ordered);
+        orderedRepository.update(ordered);
     }
 
     @Override
     public void deleteOrdered(Ordered ordered) throws Exception {
-        orderedDAO.delete(ordered);
+        orderedRepository.delete(ordered);
     }
 
     @Override
     public Ordered getOrderedById(int id) throws Exception {
-        return orderedDAO.findById(id);
+        return orderedRepository.findById(id);
     }
 
     @Override
     public List<Ordered> getAll() {
-        return orderedDAO.getAll();
+        return orderedRepository.getAll();
     }
 }

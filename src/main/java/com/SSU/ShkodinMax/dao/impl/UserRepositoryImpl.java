@@ -1,6 +1,6 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.UserDAO;
+import com.SSU.ShkodinMax.dao.UserRepository;
 import com.SSU.ShkodinMax.model.User;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
@@ -9,10 +9,10 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserRepositoryImpl implements UserRepository {
     private   SessionFactory sessionFactory;
 
-    public UserDAOImpl() {
+    public UserRepositoryImpl() {
         this.sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
 

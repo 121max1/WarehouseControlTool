@@ -1,7 +1,7 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.repository.ProviderDAO;
-import com.SSU.ShkodinMax.repository.impl.ProviderDAOImpl;
+import com.SSU.ShkodinMax.dao.ProviderRepository;
+import com.SSU.ShkodinMax.dao.impl.ProviderRepositoryImpl;
 import com.SSU.ShkodinMax.model.Provider;
 import com.SSU.ShkodinMax.services.ProviderService;
 
@@ -9,35 +9,35 @@ import java.util.List;
 
 public class ProviderServiceImpl implements ProviderService {
 
-    private ProviderDAO providerDAO;
+    private ProviderRepository providerRepository;
 
     public ProviderServiceImpl(){
-        providerDAO = new ProviderDAOImpl();
+        providerRepository = new ProviderRepositoryImpl();
     }
 
 
     @Override
     public void addProvider(Provider provider) throws Exception {
-        providerDAO.save(provider);
+        providerRepository.save(provider);
     }
 
     @Override
     public void updateProvider(Provider provider) throws Exception {
-        providerDAO.update(provider);
+        providerRepository.update(provider);
     }
 
     @Override
     public void deleteProvider(Provider provider) throws Exception {
-        providerDAO.delete(provider);
+        providerRepository.delete(provider);
     }
 
     @Override
     public Provider getProviderById(int id) throws Exception {
-        return providerDAO.findById(id);
+        return providerRepository.findById(id);
     }
 
     @Override
     public List<Provider> getAll() {
-        return providerDAO.getAll();
+        return providerRepository.getAll();
     }
 }

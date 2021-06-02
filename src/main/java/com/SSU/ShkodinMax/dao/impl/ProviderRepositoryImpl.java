@@ -1,7 +1,7 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.StaffDAO;
-import com.SSU.ShkodinMax.model.Staff;
+import com.SSU.ShkodinMax.dao.ProviderRepository;
+import com.SSU.ShkodinMax.model.Provider;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,61 +12,64 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class StaffDAOImpl implements StaffDAO {
+public class ProviderRepositoryImpl implements ProviderRepository {
     private  SessionFactory sessionFactory;
 
-    public StaffDAOImpl() {
+    public ProviderRepositoryImpl() {
         this.sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
 
     @Override
-    public Staff findById(int id) throws Exception {
+    public Provider findById(int id) throws Exception {
+        Provider provider = null;
         try (Session session = sessionFactory.openSession()) {
-            Staff staff = session.get(Staff.class, id);
-            if(staff == null){
-                throw new Exception(String.format("Staff with specified %s doesn't exist", id));
+            provider = session.get(Provider.class, id);
+            if(provider == null){
+                throw new Exception(String.format("Provider with specified %s doesn't exist", id));
             }
-            return staff;
+            return provider;
 
         }
     }
 
     @Override
-    public void save(Staff staff){
-        try (Session session = sessionFactory.openSession()) {
+    public void save(Provider provider){
+        Session session = sessionFactory.openSession();
+        try{
             session.beginTransaction();
-            session.save(staff);
+            session.save(provider);
             session.getTransaction().commit();
+        }finally {
             session.close();
         }
     }
 
     @Override
-    public void update(Staff staff) {
+    public void update(Provider provider){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(staff);
+            session.update(provider);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void delete(Staff staff){
+    public void delete(Provider provider) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(staff);
+            session.delete(provider);
             session.getTransaction().commit();
         }
     }
     @Override
-    public List<Staff> getAll() {
+    public List<Provider> getAll() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Staff> cq = cb.createQuery(Staff.class);
-            Root<Staff> rootEntry = cq.from(Staff.class);
-            CriteriaQuery<Staff> all = cq.select(rootEntry);
+            CriteriaQuery<Provider> cq = cb.createQuery(Provider.class);
+            Root<Provider> rootEntry = cq.from(Provider.class);
+            CriteriaQuery<Provider> all = cq.select(rootEntry);
 
-            TypedQuery<Staff> allQuery = session.createQuery(all);
+            TypedQuery<Provider> allQuery = session.createQuery(all);
             return allQuery.getResultList();
 
         }

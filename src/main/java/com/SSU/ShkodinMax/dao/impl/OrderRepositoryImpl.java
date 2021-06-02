@@ -1,7 +1,7 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.OrderedDAO;
-import com.SSU.ShkodinMax.model.Ordered;
+import com.SSU.ShkodinMax.dao.OrderRepository;
+import com.SSU.ShkodinMax.model.Order;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,66 +12,62 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class OrderedDAOImpl implements OrderedDAO {
+public class OrderRepositoryImpl implements OrderRepository {
+
     private  SessionFactory sessionFactory;
 
-    public OrderedDAOImpl() {
+    public OrderRepositoryImpl() {
         this.sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
 
     @Override
-    public Ordered findById (int id) throws Exception {
-        Ordered ordered = null;
+    public Order findById(int id) throws Exception {
+        Order order = null;
         try (Session session = sessionFactory.openSession()) {
-            ordered = session.get(Ordered.class, id);
-            if(ordered == null){
-                throw new Exception(String.format("Ordered with specified %s doesn't exist", id));
+            order = session.get(Order.class, id);
+            if(order == null){
+                throw new Exception(String.format("Order with specified %s doesn't exist", id));
             }
-            return ordered;
-
+            return order;
         }
     }
 
     @Override
-    public void save(Ordered ordered) {
-        Session session = sessionFactory.openSession();
-        try{
-            session.beginTransaction();
-            session.save(ordered);
-            session.getTransaction().commit();
-        }finally {
-            session.close();
-        }
-    }
-
-
-    @Override
-    public void update(Ordered ordered) {
+    public void save(Order order){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(ordered);
+            session.save(order);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void delete(Ordered ordered) {
+    public void update(Order order){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(ordered);
+            session.update(order);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public List<Ordered> getAll() {
+    public void delete(Order order){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(order);
+            session.getTransaction().commit();
+
+        }
+    }
+    @Override
+    public List<Order> getAll() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Ordered> cq = cb.createQuery(Ordered.class);
-            Root<Ordered> rootEntry = cq.from(Ordered.class);
-            CriteriaQuery<Ordered> all = cq.select(rootEntry);
+            CriteriaQuery<Order> cq = cb.createQuery(Order.class);
+            Root<Order> rootEntry = cq.from(Order.class);
+            CriteriaQuery<Order> all = cq.select(rootEntry);
 
-            TypedQuery<Ordered> allQuery = session.createQuery(all);
+            TypedQuery<Order> allQuery = session.createQuery(all);
             return allQuery.getResultList();
 
         }

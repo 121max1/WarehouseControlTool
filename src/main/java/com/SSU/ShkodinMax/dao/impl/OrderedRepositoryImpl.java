@@ -1,7 +1,7 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.ProviderDAO;
-import com.SSU.ShkodinMax.model.Provider;
+import com.SSU.ShkodinMax.dao.OrderedRepository;
+import com.SSU.ShkodinMax.model.Ordered;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,64 +12,63 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class ProviderDAOImpl implements ProviderDAO {
+public class OrderedRepositoryImpl implements OrderedRepository {
     private  SessionFactory sessionFactory;
 
-    public ProviderDAOImpl() {
+    public OrderedRepositoryImpl() {
         this.sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
 
     @Override
-    public Provider findById(int id) throws Exception {
-        Provider provider = null;
+    public Ordered findById (int id) throws Exception {
+        Ordered ordered = null;
         try (Session session = sessionFactory.openSession()) {
-            provider = session.get(Provider.class, id);
-            if(provider == null){
-                throw new Exception(String.format("Provider with specified %s doesn't exist", id));
+            ordered = session.get(Ordered.class, id);
+            if(ordered == null){
+                throw new Exception(String.format("Ordered with specified %s doesn't exist", id));
             }
-            return provider;
+            return ordered;
 
         }
     }
 
     @Override
-    public void save(Provider provider){
-        Session session = sessionFactory.openSession();
-        try{
-            session.beginTransaction();
-            session.save(provider);
-            session.getTransaction().commit();
-        }finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void update(Provider provider){
+    public void save(Ordered ordered) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(provider);
+            session.save(ordered);
+            session.getTransaction().commit();
+        }
+    }
+
+
+    @Override
+    public void update(Ordered ordered) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(ordered);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void delete(Provider provider) {
+    public void delete(Ordered ordered) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(provider);
+            session.delete(ordered);
             session.getTransaction().commit();
         }
     }
+
     @Override
-    public List<Provider> getAll() {
+    public List<Ordered> getAll() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Provider> cq = cb.createQuery(Provider.class);
-            Root<Provider> rootEntry = cq.from(Provider.class);
-            CriteriaQuery<Provider> all = cq.select(rootEntry);
+            CriteriaQuery<Ordered> cq = cb.createQuery(Ordered.class);
+            Root<Ordered> rootEntry = cq.from(Ordered.class);
+            CriteriaQuery<Ordered> all = cq.select(rootEntry);
 
-            TypedQuery<Provider> allQuery = session.createQuery(all);
+            TypedQuery<Ordered> allQuery = session.createQuery(all);
             return allQuery.getResultList();
 
         }

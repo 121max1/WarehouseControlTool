@@ -1,11 +1,10 @@
-package com.SSU.ShkodinMax.repository;
+package com.SSU.ShkodinMax.dao;
 
-import com.SSU.ShkodinMax.model.Product;
 import com.SSU.ShkodinMax.model.Type;
 
 import java.util.List;
 
-public interface TypeDAO {
+public interface TypeRepository {
     Type findById(int id) throws Exception;
 
     void save(Type type);

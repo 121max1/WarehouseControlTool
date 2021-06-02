@@ -1,7 +1,7 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.TypeDAO;
-import com.SSU.ShkodinMax.model.Type;
+import com.SSU.ShkodinMax.dao.ProductRepository;
+import com.SSU.ShkodinMax.model.Product;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,62 +12,61 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class TypeDAOImpl implements TypeDAO {
+public class ProductRepositoryImpl implements ProductRepository {
     private  SessionFactory sessionFactory;
 
-    public TypeDAOImpl() {
+    public ProductRepositoryImpl(){
         this.sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
 
     @Override
-    public Type findById(int id) throws Exception {
+    public Product findById(int id) throws Exception {
+        Product product = null;
         try (Session session = sessionFactory.openSession()) {
-            Type type = session.get(Type.class, id);
-            if(type == null){
-                throw new Exception(String.format("Type with specified %s doesn't exist", id));
+            product = session.get(Product.class, id);
+            if(product == null){
+                throw new Exception(String.format("Product with specified %s doesn't exist", id));
             }
-            return type;
+            return product;
 
         }
     }
 
     @Override
-    public void save(Type type){
+    public void save(Product product){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(type);
-            session.getTransaction().commit();
-
-        }
-    }
-
-    @Override
-    public void update(Type type){
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.save(type);
+            session.save(product);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void delete(Type type)  {
+    public void update(Product product){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(type);
+            session.update(product);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public List<Type> getAll() {
+    public void delete(Product product){
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(product);
+            session.getTransaction().commit();
+        }
+    }
+    @Override
+    public List<Product> getAll() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Type> cq = cb.createQuery(Type.class);
-            Root<Type> rootEntry = cq.from(Type.class);
-            CriteriaQuery<Type> all = cq.select(rootEntry);
+            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+            Root<Product> rootEntry = cq.from(Product.class);
+            CriteriaQuery<Product> all = cq.select(rootEntry);
 
-            TypedQuery<Type> allQuery = session.createQuery(all);
+            TypedQuery<Product> allQuery = session.createQuery(all);
             return allQuery.getResultList();
 
         }

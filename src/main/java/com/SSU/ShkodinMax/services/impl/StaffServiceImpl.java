@@ -1,7 +1,7 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.repository.StaffDAO;
-import com.SSU.ShkodinMax.repository.impl.StaffDAOImpl;
+import com.SSU.ShkodinMax.dao.StaffRepository;
+import com.SSU.ShkodinMax.dao.impl.StaffRepositoryImpl;
 import com.SSU.ShkodinMax.model.Staff;
 import com.SSU.ShkodinMax.services.StaffService;
 
@@ -9,35 +9,35 @@ import java.util.List;
 
 public class StaffServiceImpl implements StaffService {
 
-    private StaffDAO staffDAO;
+    private StaffRepository staffRepository;
 
     public StaffServiceImpl(){
-        staffDAO = new StaffDAOImpl();
+        staffRepository = new StaffRepositoryImpl();
     }
 
     @Override
     public void addStaff(Staff staff) throws Exception {
-        staffDAO.save(staff);
+        staffRepository.save(staff);
     }
 
     @Override
     public void updateStaff(Staff staff) throws Exception {
-        staffDAO.update(staff);
+        staffRepository.update(staff);
 
     }
 
     @Override
     public void deleteStaff(Staff staff) throws Exception {
-        staffDAO.delete(staff);
+        staffRepository.delete(staff);
     }
 
     @Override
     public Staff getStaffById(int id) throws Exception {
-        return  staffDAO.findById(id);
+        return  staffRepository.findById(id);
     }
 
     @Override
     public List<Staff> getAll() {
-        return staffDAO.getAll();
+        return staffRepository.getAll();
     }
 }

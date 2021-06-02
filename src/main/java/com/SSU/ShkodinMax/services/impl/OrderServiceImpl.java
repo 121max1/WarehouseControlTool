@@ -1,7 +1,7 @@
 package com.SSU.ShkodinMax.services.impl;
 
-import com.SSU.ShkodinMax.repository.OrderDAO;
-import com.SSU.ShkodinMax.repository.impl.OrderDAOImpl;
+import com.SSU.ShkodinMax.dao.OrderRepository;
+import com.SSU.ShkodinMax.dao.impl.OrderRepositoryImpl;
 import com.SSU.ShkodinMax.model.Order;
 import com.SSU.ShkodinMax.services.OrderService;
 
@@ -9,35 +9,35 @@ import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
-    private OrderDAO orderDAO;
+    private OrderRepository orderRepository;
 
     public OrderServiceImpl(){
-        orderDAO = new OrderDAOImpl();
+        orderRepository = new OrderRepositoryImpl();
     }
 
     @Override
     public void addOrder(Order order) throws Exception {
-        orderDAO.save(order);
+        orderRepository.save(order);
 
     }
 
     @Override
     public void updateOrder(Order order) throws Exception {
-        orderDAO.update(order);
+        orderRepository.update(order);
     }
 
     @Override
     public void deleteOrder(Order order) throws Exception {
-        orderDAO.delete(order);
+        orderRepository.delete(order);
     }
 
     @Override
     public Order getOrderById(int id) throws Exception {
-        return orderDAO.findById(id);
+        return orderRepository.findById(id);
     }
 
     @Override
     public List<Order> getAll() {
-        return orderDAO.getAll();
+        return orderRepository.getAll();
     }
 }

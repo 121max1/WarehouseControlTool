@@ -1,6 +1,6 @@
-package com.SSU.ShkodinMax.repository.impl;
+package com.SSU.ShkodinMax.dao.impl;
 
-import com.SSU.ShkodinMax.repository.ClientDAO;
+import com.SSU.ShkodinMax.dao.ClientRepository;
 import com.SSU.ShkodinMax.model.Client;
 import com.SSU.ShkodinMax.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
@@ -12,11 +12,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class ClientDAOImpl  implements ClientDAO {
+public class ClientRepositoryImpl implements ClientRepository {
 
     private  SessionFactory sessionFactory;
 
-    public ClientDAOImpl(){
+    public ClientRepositoryImpl(){
         sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     }
     @Override
