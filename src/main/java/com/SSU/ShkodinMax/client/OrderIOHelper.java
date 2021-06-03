@@ -5,6 +5,7 @@ import com.SSU.ShkodinMax.services.ClientService;
 import com.SSU.ShkodinMax.services.OrderService;
 import com.SSU.ShkodinMax.services.StaffService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.GregorianCalendar;
 
@@ -82,11 +83,10 @@ public class OrderIOHelper {
 
     public static void getALl(OrderService orderService) {
         try {
-
-
         for(Order order : orderService.getAll()){
-            String serialized = new ObjectMapper().writeValueAsString(order);
-            System.out.println(serialized);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            System.out.println(mapper.writeValueAsString(order));
         }}catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }

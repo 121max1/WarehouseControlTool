@@ -1,16 +1,14 @@
 package com.SSU.ShkodinMax.client;
 
-import com.SSU.ShkodinMax.model.Client;
-import com.SSU.ShkodinMax.model.Order;
+
 import com.SSU.ShkodinMax.model.Staff;
-import com.SSU.ShkodinMax.services.ClientService;
-import com.SSU.ShkodinMax.services.OrderService;
+
 import com.SSU.ShkodinMax.services.StaffService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 public class StaffIOHelper {
 
@@ -83,8 +81,9 @@ public class StaffIOHelper {
     public static void getALl(StaffService staffService) {
         try {
             for (Staff staff : staffService.getAll()) {
-                String serialized = new ObjectMapper().writeValueAsString(staff);
-                System.out.println(serialized);
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.enable(SerializationFeature.INDENT_OUTPUT);
+                System.out.println(mapper.writeValueAsString(staff));
             }
         }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());

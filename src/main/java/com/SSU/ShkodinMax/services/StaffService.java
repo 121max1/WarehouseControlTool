@@ -1,6 +1,5 @@
 package com.SSU.ShkodinMax.services;
 
-import com.SSU.ShkodinMax.model.Client;
 import com.SSU.ShkodinMax.model.Staff;
 
 import java.util.List;

@@ -1,12 +1,14 @@
 package com.SSU.ShkodinMax.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Entity
 @Table(name = "staff")
 public class Staff extends Contacts {
@@ -14,10 +16,12 @@ public class Staff extends Contacts {
     @Column(name = "position", nullable = false)
     private String position;
 
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "birthday")
     private GregorianCalendar birthday;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
     private List<Order> orderList;
 

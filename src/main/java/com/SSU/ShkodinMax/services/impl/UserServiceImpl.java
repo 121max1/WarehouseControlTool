@@ -30,13 +30,10 @@ public class UserServiceImpl implements UserService {
         if (userToLogin == null) {
             return false;
         } else {
-            if (Hashing.sha256().
+            return Hashing.sha256().
                     hashString(user.getPassword(), StandardCharsets.UTF_8).
-                    toString().equals(user.getPassword()))
-            {
-                return  true;
-            }
-            return false;
+                    toString().equals(userToLogin.getPassword());
+
         }
     }
 }

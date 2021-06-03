@@ -3,6 +3,7 @@ package com.SSU.ShkodinMax.client;
 import com.SSU.ShkodinMax.model.Type;
 import com.SSU.ShkodinMax.services.TypeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.Scanner;
 
@@ -25,10 +26,10 @@ public class TypeIOHelper {
     }
     public static void getALl(TypeService typeService) {
         try {
-
             for (Type type : typeService.getAll()) {
-                String serialized = new ObjectMapper().writeValueAsString(type);
-                System.out.println(serialized);
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.enable(SerializationFeature.INDENT_OUTPUT);
+                System.out.println(mapper.writeValueAsString(type));
             }
         }catch (Exception e) {
             System.out.println("Something went wrong. Reason: " + e.getMessage());

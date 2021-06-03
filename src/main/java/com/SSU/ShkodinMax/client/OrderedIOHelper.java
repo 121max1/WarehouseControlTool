@@ -8,6 +8,7 @@ import com.SSU.ShkodinMax.services.OrderService;
 import com.SSU.ShkodinMax.services.OrderedService;
 import com.SSU.ShkodinMax.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.math.BigDecimal;
 
@@ -71,8 +72,9 @@ public class OrderedIOHelper {
     public static void getALl(OrderedService orderedService){
         try {
         for(Ordered ordered : orderedService.getAll()){
-            String serialized = new ObjectMapper().writeValueAsString(ordered);
-            System.out.println(serialized);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            System.out.println( mapper.writeValueAsString(ordered));
         }}catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }

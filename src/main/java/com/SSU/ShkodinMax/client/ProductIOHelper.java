@@ -4,6 +4,7 @@ import com.SSU.ShkodinMax.model.*;
 import com.SSU.ShkodinMax.services.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -80,8 +81,9 @@ public class ProductIOHelper {
     public static void getALl(ProductService productService)  {
         try{
         for(Product product : productService.getAll()){
-            String serialized = new ObjectMapper().writeValueAsString(product);
-            System.out.println(serialized);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            System.out.println(mapper.writeValueAsString(product));
         }}catch(Exception e){
                 System.out.println("Something went wrong. Reason: " + e.getMessage());
             }

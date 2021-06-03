@@ -66,20 +66,6 @@ public class ConsolePL {
                 "3. Update \n" +
                 "4. Delete \n");
     }
-    private static Client AddClient(){
-        Scanner sc = new Scanner(System.in);
-
-        Client clientToReturn = new Client();
-        System.out.print("Enter Fullname:");
-        clientToReturn.setFullName(sc.nextLine());
-        System.out.print("Enter Address:");
-        clientToReturn.setAddress(sc.nextLine());
-        System.out.print("Enter Email:");
-        clientToReturn.setEmail(sc.nextLine());
-        System.out.print("Enter Phone number:");
-        clientToReturn.setPhoneNumber(sc.nextLine());
-        return clientToReturn;
-    }
 
     private static String[] getLoginAndPasswordToSign(){
         Scanner sc = new Scanner(System.in);

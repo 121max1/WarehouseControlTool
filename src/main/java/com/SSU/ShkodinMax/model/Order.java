@@ -1,6 +1,7 @@
 package com.SSU.ShkodinMax.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -24,9 +25,13 @@ public class Order implements Serializable {
     @JoinColumn(name = "staff_id" , nullable = false)
     private Staff staff;
 
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "shipping_date", nullable = false)
     private GregorianCalendar shippingDate;
 
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "payment_date", nullable = false)
     private GregorianCalendar paymentDate;
 
@@ -57,6 +62,10 @@ public class Order implements Serializable {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setOrdered(List<Ordered> ordered) {
+        this.ordered = ordered;
     }
 
     public Client getClient() {

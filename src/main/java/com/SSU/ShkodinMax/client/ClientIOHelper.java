@@ -73,7 +73,7 @@ public  class ClientIOHelper {
         for(Client client : clientService.getAll()){
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            mapper.writeValueAsString(client);
+            System.out.println( mapper.writeValueAsString(client));
         } }catch (Exception e){
             System.out.println("Something went wrong. Reason: " + e.getMessage());
         }
